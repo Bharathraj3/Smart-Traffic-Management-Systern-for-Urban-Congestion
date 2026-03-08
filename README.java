@@ -1,4 +1,4 @@
-import java.util.Timer;
+ import java.util.Timer;
 import java.util.TimerTask;
 
 class TrafficLight {
