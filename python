@@ -1,0 +1,39 @@
+# Smart Traffic Management System
+
+import time
+
+# Define traffic lights
+lights = {
+ "1": {"status": "RED", "timer": 30},
+ "2": {"status": "RED", "timer": 30},
+ "3": {"status": "RED", "timer": 30},
+ "4": {"status": "RED", "timer": 30}
+}
+
+# Function to update lights
+def update_lights():
+ for lane, light in lights.items():
+ print(f"Lane {lane}: {light['status']} ({light['timer']}s)")
+ if light['status'] == "RED":
+ light['status'] = "GREEN"
+ light['timer'] = 30
+ elif light['status'] == "GREEN":
+ light['status'] = "YELLOW"
+ light['timer'] = 5
+ elif light['status'] == "YELLOW":
+ light['status'] = "RED"
+ light['timer'] = 30
+
+# Simulate traffic management
+while True:
+ print("\nTraffic Status:")
+ for lane, light in lights.items():
+ print(f"Lane {lane}: {light['status']} ({light['timer']}s)")
+ 
+ # Update timers
+ for lane, light in lights.items():
+ light['timer'] -= 1
+ if light['timer'] <= 0:
+ update_lights()
+ 
+ time.sleep(1) # 1-second interval
