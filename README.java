@@ -1,47 +1,42 @@
- import java.util.Timer;
-import java.util.TimerTask;
+<!DOCTYPE html>
+<html>
+<body>
+ <h1>Smart Traffic Management</h1>
+ <div id="trafficLights">
+ <div>Lane 1: <span id="lane1">RED (30s)</span></div>
+ <div>Lane 2: <span id="lane2">RED (30s)</span></div>
+ </div>
 
-class TrafficLight {
- String status;
- int timer;
+ <script>
+ let lane1 = { status: "RED", timer: 30 };
+ let lane2 = { status: "RED", timer: 30 };
 
- TrafficLight(String status, int timer) {
- this.status = status;
- this.timer = timer;
- }
+ setInterval(() => {
+ updateLights();
+ }, 1000);
 
- void updateLight() {
- System.out.println("Lane: " + status + " (" + timer + "s)");
- if (status.equals("RED")) {
- status = "GREEN";
- timer = 30;
- } else if (status.equals("GREEN")) {
- status = "YELLOW";
- timer = 5;
- } else {
- status = "RED";
- timer = 30;
- }
- }
-}
-
-public class SmartTrafficSystem {
- public static void main(String[] args) {
- TrafficLight lane1 = new TrafficLight("RED", 30);
- TrafficLight lane2 = new TrafficLight("RED", 30);
-
- Timer timer = new Timer();
- timer.scheduleAtFixedRate(new TimerTask() {
- public void run() {
+ function updateLights() {
  lane1.timer--;
  lane2.timer--;
- System.out.println("\nTraffic Status:");
- System.out.println("Lane 1: " + lane1.status + " (" + lane1.timer + "s)");
- System.out.println("Lane 2: " + lane2.status + " (" + lane2.timer + "s)");
- 
- if (lane1.timer <= 0) lane1.updateLight();
- if (lane2.timer <= 0) lane2.updateLight();
+ document.getElementById("lane1").textContent = `${lane1.status} (${lane1.timer}s)`;
+ document.getElementById("lane2").textContent = `${lane2.status} (${lane2.timer}s)`;
+
+ if (lane1.timer <= 0) updateLane(lane1);
+ if (lane2.timer <= 0) updateLane(lane2);
  }
- }, 0, 1000); // 1-second interval
+
+ function updateLane(lane) {
+ if (lane.status === "RED") {
+ lane.status = "GREEN";
+ lane.timer = 30;
+ } else if (lane.status === "GREEN") {
+ lane.status = "YELLOW";
+ lane.timer = 5;
+ } else {
+ lane.status = "RED";
+ lane.timer = 30;
  }
-}
+ }
+ </script>
+</body>
+</html>
